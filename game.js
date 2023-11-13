@@ -7,6 +7,7 @@ async function fetchGameAPI() {
   gameDataAPI = gameDataAPI.rows;
   console.log(gameDataAPI);
   document.querySelector('#theGame').innerHTML = createTable();
+  // createTable();
   function createTable() {
     let table = "<table>";
     let rows = "";
@@ -26,7 +27,7 @@ async function fetchGameAPI() {
       console.log("rows", rows)
     }
     table += rows;
-    table += "</table>";
+    return table += "</table>";
     console.log(table);
   }
 
@@ -34,7 +35,7 @@ async function fetchGameAPI() {
 
 
 
-createTable();
+// createTable();
 // function createGameTable() {
 //   let gameHTML = "<table>";
 //   gameHTML += "</table>";
