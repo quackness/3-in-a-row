@@ -1,14 +1,22 @@
-// const cors = require('cors');
-
-
-
 
 async function fetchGameAPI() {
-  const response = await fetch('https://prog2700.onrender.com/threeinarow/sample');
+  let response = await fetch('https://prog2700.onrender.com/threeinarow/sample');
   // waits until the request completes...
-  const gameDataAPI = await response.json();
+  let gameDataAPI = await response.json();
+  gameDataAPI = gameDataAPI.rows;
   console.log(gameDataAPI);
+  let rows = "";
+  for (let i = 0; i < gameDataAPI.length; i++) {
+    rows += "<tr>";
+    console.log(">>", gameDataAPI[i])
+    for (let j = 0; j < gameDataAPI[i].length; j++) {
+      console.log("inner array", gameDataAPI[i][j]);
+    }
+    rows += "</tr>";
+    console.log("rows", rows)
+  }
 };
+
 
 document.querySelector('#theGame').innerHTML = createGameTable();
 
