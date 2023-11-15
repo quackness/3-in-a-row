@@ -17,9 +17,21 @@ async function fetchGameAPI() {
       let tableData = ""
       for (let j = 0; j < gameDataAPI[i].length; j++) {
         //gameDataAPI[i][j] is an object, must loop through it 
-        // tableData += "<td>" + gameDataAPI[i][j] + "</td>";
+        console.log("**", gameDataAPI[i][j])
+        // tableData += "<td>" + gameDataAPI[i][j].currentState + "</td>";
+        // if (gameDataAPI[i][j].currentState === 0) {
+        tableData += `<td class='state${gameDataAPI[i][j].currentState}'></td>`;
+
+        //   // document.querySelector('td').style.backgroundColor = "pink";
+        // }
+        // if (gameDataAPI[i][j].currentState === 1) {
+        //   tableData += "<td> blue </td>";
+        // }
+        // if (gameDataAPI[i][j].currentState === 2) {
+        //   tableData += "<td> white </td>";
+        // }
         // console.log("table data", gameDataAPI[i][j]);
-        tableData += "<td> Data </td>";
+        // tableData += "<td> Data </td>";
         console.log("table data", tableData);
       }
       rows += tableData;

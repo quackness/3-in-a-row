@@ -1,0 +1,17 @@
+.state0 {
+  background-color: beige;
+}
+
+.state1 {
+  background-color: green;
+}
+
+.state2 {
+  background-color: blueviolet;
+}
+
+
+td {
+  height: 50px;
+  width: 50px;
+}
