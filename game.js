@@ -7,7 +7,8 @@ async function fetchGameAPI() {
   gameDataAPI = gameDataAPI.rows;
   console.log(gameDataAPI);
   document.querySelector('#theGame').innerHTML = createTable();
-  // createTable();
+  // createTable();let 
+  // let singleData;
   function createTable() {
     let table = "<table>";
     let rows = "";
@@ -16,22 +17,8 @@ async function fetchGameAPI() {
       console.log(">>", gameDataAPI[i])
       let tableData = ""
       for (let j = 0; j < gameDataAPI[i].length; j++) {
-        //gameDataAPI[i][j] is an object, must loop through it 
-        console.log("**", gameDataAPI[i][j])
-        // tableData += "<td>" + gameDataAPI[i][j].currentState + "</td>";
-        // if (gameDataAPI[i][j].currentState === 0) {
-        tableData += `<td class='state${gameDataAPI[i][j].currentState}'></td>`;
-
-        //   // document.querySelector('td').style.backgroundColor = "pink";
-        // }
-        // if (gameDataAPI[i][j].currentState === 1) {
-        //   tableData += "<td> blue </td>";
-        // }
-        // if (gameDataAPI[i][j].currentState === 2) {
-        //   tableData += "<td> white </td>";
-        // }
-        // console.log("table data", gameDataAPI[i][j]);
-        // tableData += "<td> Data </td>";
+        // singleData = gameDataAPI[i][j];
+        tableData += `<td id='row${i}col${j}' class='state${gameDataAPI[i][j].currentState}'></td>`;
         console.log("table data", tableData);
       }
       rows += tableData;
@@ -42,6 +29,20 @@ async function fetchGameAPI() {
     return table += "</table>";
     console.log(table);
   }
+
+  function displayDate(event) {
+    console.log(event);
+    // in target find IdleDeadline, parse it to extract the row and column
+  }
+
+  let td = document.querySelectorAll('td')
+  for (let i = 0; i < td.length; i++) {
+    td[i].addEventListener("click", displayDate);
+    //event.target.id
+    console.log(event.target.id)
+  }
+
+
 
 };
 
