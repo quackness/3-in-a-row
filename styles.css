@@ -18,8 +18,12 @@ td {
 
 .incorrect {
   border: solid 3px red;
+  pointer-events: none;
 }
 
+.disabled {
+  pointer-events: none;
+}
 
 
 .unclickable {

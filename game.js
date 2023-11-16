@@ -1,5 +1,4 @@
 
-
 async function fetchGameAPI() {
   let response = await fetch('https://prog2700.onrender.com/threeinarow/sample');
   // waits until the request completes...
@@ -136,20 +135,20 @@ async function fetchGameAPI() {
             for (let k = 0; k < td.length; k++) {
               console.log(i, j);
               if (td[k].id === `${i}:${j}`) {
-                td[k].className += " incorrect unclickable";
+                td[k].className += " incorrect disabled";
               }
             }
-
           }
-
         }
-
-
       }
-      // } else if (checkBox.checked === false) {
-      //   console.log("unhighlight");
-      // console.log("incorrect", incorrect);
-      // return incorrect;
+    }
+    if (checkBox.checked === false) {
+      console.log("unhighlight");
+      let td = document.querySelectorAll('td');
+      console.log("td", td);
+      for (let i = 0; i < td.length; i++) {
+        td[i].classList.remove("incorrect", "disabled");
+      }
     }
   };
 
