@@ -7,8 +7,7 @@ async function fetchGameAPI() {
   gameDataAPI = gameDataAPI.rows;
   console.log(gameDataAPI);
   document.querySelector('#theGame').innerHTML = createTable();
-  // createTable();let 
-  // let singleData;
+
   function createTable() {
     let table = "<table>";
     let rows = "";
@@ -56,7 +55,7 @@ async function fetchGameAPI() {
       classtoBeChanged.className = "state0"
     }
     console.log("after:", gameDataAPI)
-    check();
+    checkGame();
     // }
   }
   // in target find IdleDeadline, parse it to extract the row and column
@@ -73,14 +72,14 @@ async function fetchGameAPI() {
   // console.log("button", btn);
   // document.querySelector('button');
 
-  function check() {
+  function checkGame() {
     let invalid;
     for (let i = 0; i < gameDataAPI.length; i++) {
       invalid = false;
       for (let j = 0; j < gameDataAPI[i].length; j++) {
         if (gameDataAPI[i][j].currentState !== 0 && gameDataAPI[i][j].currentState !== gameDataAPI[i][j].correctState) {
           invalid = true;
-          alert('incorect tile position')
+          alert('Incorect tile position')
           break;
         }
       }
@@ -89,26 +88,24 @@ async function fetchGameAPI() {
       }
     };
     if (!invalid) {
-      alert('correct')
+      alert('Correct')
     }
+  };
 
-  }
-
-
-
-
-
-}
-
-
-
-// createTable();
-// function createGameTable() {
-//   let gameHTML = "<table>";
-//   gameHTML += "</table>";
-//   return gameHTML;
-// }
+  //Button creating, attaching it to the dom and filling it up with text
+  let gameDiv = document.getElementById("theGame");
+  // creating button
+  let button = document.createElement('button');
+  //displayed on button
+  let text = document.createTextNode("Check Game");
+  // appending text to button
+  button.appendChild(text);
+  gameDiv.appendChild(button);
 
 
+
+
+
+};
 
 fetchGameAPI();
