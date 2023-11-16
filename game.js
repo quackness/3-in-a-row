@@ -17,7 +17,12 @@ async function fetchGameAPI() {
       // console.log(">>", gameDataAPI[i])
       let tableData = ""
       for (let j = 0; j < gameDataAPI[i].length; j++) {
-        tableData += `<td id='row${i}col${j}' class='state${gameDataAPI[i][j].currentState}'></td>`;
+        tableData += `<td id='${i}:${j}' class='state${gameDataAPI[i][j].currentState}${gameDataAPI[i][j].canToggle ? "" : " unclickable"}'></td>`;
+        if (!gameDataAPI[i][j].canToggle) {
+          //add class which disables pointer events
+          console.log("unclickable");
+
+        }
         // console.log("table data", tableData);
       }
       rows += tableData;
@@ -32,17 +37,24 @@ async function fetchGameAPI() {
   function changeTileColour(event) {
     console.log("event", event);
     console.log("event", event.target.id);
+    let [i, j] = event.target.id.split(":");
+    // console.log("arr", arr);
+    // let clickable = gameDataAPI[parseInt(i)][parseInt(j)].canToggle;
     let classtoBeChanged = document.getElementById(event.target.id)
     console.log("classtoBeChanged", classtoBeChanged.className);
+    // classtoBeChanged.classList.remove(classtoBeChanged.className);
+    // if (clickable) {
+    console.log(classtoBeChanged)
     if (classtoBeChanged.className === "state0") {
       classtoBeChanged.className = "state1"
+
     } else if (classtoBeChanged.className === "state1") {
       classtoBeChanged.className = "state2"
     } else {
       classtoBeChanged.className = "state0"
     }
+    // }
   }
-
   // in target find IdleDeadline, parse it to extract the row and column
 
 

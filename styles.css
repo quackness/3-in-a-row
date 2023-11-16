@@ -15,3 +15,8 @@ td {
   height: 50px;
   width: 50px;
 }
+
+.unclickable {
+  pointer-events: none;
+  /* background-color: black; */
+}
