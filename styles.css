@@ -16,6 +16,12 @@ td {
   width: 50px;
 }
 
+.incorrect {
+  border: solid 3px red;
+}
+
+
+
 .unclickable {
   pointer-events: none;
   /* background-color: black; */

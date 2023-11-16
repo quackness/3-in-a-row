@@ -54,32 +54,36 @@ async function fetchGameAPI() {
     } else {
       classtoBeChanged.className = "state0"
     }
-    console.log("after:", gameDataAPI)
-    checkGame();
+    // console.log("after:", gameDataAPI)
+    // checkGame();
     // }
   }
   // in target find IdleDeadline, parse it to extract the row and column
 
 
-  let td = document.querySelectorAll('td')
+  let td = document.querySelectorAll('td');
   for (let i = 0; i < td.length; i++) {
     td[i].addEventListener("click", changeTileColour);
     //event.target.id
     // console.log(event.target.id)
   }
 
-  // let btn = document.createElement("button");
-  // console.log("button", btn);
-  // document.querySelector('button');
 
-  function checkGame() {
+  function highlightIncorrectBoxes() {
+    let td = document.querySelectorAll('td');
+    for (let i = 0; i < td.length; i++) {
+      td[i].className += " incorrect";
+    }
+  }
+
+  function checkGame(event) {
     let invalid;
     for (let i = 0; i < gameDataAPI.length; i++) {
       invalid = false;
       for (let j = 0; j < gameDataAPI[i].length; j++) {
         if (gameDataAPI[i][j].currentState !== 0 && gameDataAPI[i][j].currentState !== gameDataAPI[i][j].correctState) {
           invalid = true;
-          alert('Incorect tile position')
+          // alert('Something is wrong')
           break;
         }
       }
@@ -88,8 +92,9 @@ async function fetchGameAPI() {
       }
     };
     if (!invalid) {
-      alert('Correct')
+      alert('So far so good')
     }
+    console.log(event)
   };
 
   //Button creating, attaching it to the dom and filling it up with text
@@ -97,10 +102,30 @@ async function fetchGameAPI() {
   // creating button
   let button = document.createElement('button');
   //displayed on button
-  let text = document.createTextNode("Check Game");
+  let text = document.createTextNode("Check Puzzle");
   // appending text to button
   button.appendChild(text);
   gameDiv.appendChild(button);
+  //click event in the button
+  button.addEventListener("click", checkGame);
+
+  //checkbox
+  let checkbox = document.createElement('input');
+  // Assigning the attributes to created checkbox
+  checkbox.type = "checkbox";
+  checkbox.name = "name";
+  checkbox.value = "value";
+  checkbox.id = "status";
+  // creating label for checkbox
+  let label = document.createElement('label');
+  // assigning attributes for the created label tag 
+  label.htmlFor = "id";
+  gameDiv.appendChild(checkbox);
+  gameDiv.appendChild(label);
+  gameDiv.appendChild(document.createTextNode('Check incorrect boxes'));
+
+
+
 
 
 
