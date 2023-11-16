@@ -42,7 +42,7 @@ async function fetchGameAPI() {
     // let clickable = gameDataAPI[parseInt(i)][parseInt(j)].canToggle;
     let classtoBeChanged = document.getElementById(event.target.id)
     console.log("classtoBeChanged", classtoBeChanged.className);
-    console.log("top of changeTileColour:", gameDataAPI)
+    console.log("top of changeTileColour:", gameDataAPI[parseInt(i)][parseInt(j)].currentState);
     // classtoBeChanged.classList.remove(classtoBeChanged.className);
     // if (clickable) {
     console.log(classtoBeChanged)
@@ -56,6 +56,7 @@ async function fetchGameAPI() {
       classtoBeChanged.className = "state0"
     }
     console.log("after:", gameDataAPI)
+    check();
     // }
   }
   // in target find IdleDeadline, parse it to extract the row and column
@@ -68,9 +69,36 @@ async function fetchGameAPI() {
     // console.log(event.target.id)
   }
 
+  // let btn = document.createElement("button");
+  // console.log("button", btn);
+  // document.querySelector('button');
+
+  function check() {
+    let invalid;
+    for (let i = 0; i < gameDataAPI.length; i++) {
+      invalid = false;
+      for (let j = 0; j < gameDataAPI[i].length; j++) {
+        if (gameDataAPI[i][j].currentState !== 0 && gameDataAPI[i][j].currentState !== gameDataAPI[i][j].correctState) {
+          invalid = true;
+          alert('incorect tile position')
+          break;
+        }
+      }
+      if (invalid) {
+        break;
+      }
+    };
+    if (!invalid) {
+      alert('correct')
+    }
+
+  }
 
 
-};
+
+
+
+}
 
 
 
