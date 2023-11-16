@@ -69,21 +69,20 @@ async function fetchGameAPI() {
   }
 
 
-  function highlightIncorrectBoxes() {
-    let td = document.querySelectorAll('td');
-    for (let i = 0; i < td.length; i++) {
-      td[i].className += " incorrect";
-    }
-  }
+
 
   function checkGame(event) {
     let invalid;
     for (let i = 0; i < gameDataAPI.length; i++) {
       invalid = false;
       for (let j = 0; j < gameDataAPI[i].length; j++) {
+        // if (gameDataAPI[i][j].currentState !== 0 && gameDataAPI[i][j].currentState === gameDataAPI[i][j].correctState) {
+        //   invalid = false;
+        //   alert('You won!!')
+        // }
         if (gameDataAPI[i][j].currentState !== 0 && gameDataAPI[i][j].currentState !== gameDataAPI[i][j].correctState) {
           invalid = true;
-          // alert('Something is wrong')
+          alert('Something is wrong')
           break;
         }
       }
@@ -94,7 +93,6 @@ async function fetchGameAPI() {
     if (!invalid) {
       alert('So far so good')
     }
-    console.log(event)
   };
 
   //Button creating, attaching it to the dom and filling it up with text
@@ -123,14 +121,41 @@ async function fetchGameAPI() {
   gameDiv.appendChild(checkbox);
   gameDiv.appendChild(label);
   gameDiv.appendChild(document.createTextNode('Check incorrect boxes'));
+  checkbox.addEventListener("click", highlightIncorrectBoxes);
+
+  function highlightIncorrectBoxes() {
+    let checkBox = document.getElementById("status");
+    let td = document.querySelectorAll('td');
+    if (checkBox.checked === true) {
+      let incorrect = [];
+      for (let i = 0; i < gameDataAPI.length; i++) {
+        for (let j = 0; j < gameDataAPI[i].length; j++) {
+          if (gameDataAPI[i][j].currentState !== gameDataAPI[i][j].correctState) {
+            console.log(gameDataAPI[i][j])
+            // console.log(td.id);
+            for (let k = 0; k < td.length; k++) {
+              console.log(i, j);
+              if (td[k].id === `${i}:${j}`) {
+                td[k].className += " incorrect unclickable";
+              }
+            }
+
+          }
+
+        }
 
 
+      }
+      // } else if (checkBox.checked === false) {
+      //   console.log("unhighlight");
+      // console.log("incorrect", incorrect);
+      // return incorrect;
+    }
+  };
 
-
-
-
-
-
-};
-
+  // let td = document.querySelectorAll('td');
+  // for (let i = 0; i < td.length; i++) {
+  //   td[i].className += " incorrect";
+  // }
+}
 fetchGameAPI();
