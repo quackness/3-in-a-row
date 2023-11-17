@@ -1,10 +1,25 @@
 
+//add header
+let body = document.querySelector('body');
+let header = document.createElement("h1");
+let headerText = document.createTextNode("🎲 3-In-A-Row 🎲");
+header.append(headerText);
+body.prepend(header);
+
+// div.appendChild(header);
+
+
 async function fetchGameAPI() {
   let response = await fetch('https://prog2700.onrender.com/threeinarow/sample');
   // waits until the request completes...
   let gameDataAPI = await response.json();
   gameDataAPI = gameDataAPI.rows;
   console.log(gameDataAPI);
+
+
+
+
+
   document.querySelector('#theGame').innerHTML = createTable();
 
   function createTable() {
@@ -152,9 +167,5 @@ async function fetchGameAPI() {
     }
   };
 
-  // let td = document.querySelectorAll('td');
-  // for (let i = 0; i < td.length; i++) {
-  //   td[i].className += " incorrect";
-  // }
 }
 fetchGameAPI();
