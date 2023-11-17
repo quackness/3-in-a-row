@@ -111,13 +111,16 @@ async function fetchGameAPI() {
 
   //Button creating, attaching it to the dom and filling it up with text
   let gameDiv = document.getElementById("theGame");
+  let sideDiv = document.createElement('div');
+  sideDiv.classList.add("right-side");
   // creating button
   let button = document.createElement('button');
   //displayed on button
   let text = document.createTextNode("Check Puzzle");
   // appending text to button
   button.appendChild(text);
-  gameDiv.appendChild(button);
+  gameDiv.appendChild(sideDiv);
+  sideDiv.appendChild(button);
   //click event in the button
   button.addEventListener("click", checkGame);
 
@@ -132,9 +135,9 @@ async function fetchGameAPI() {
   let label = document.createElement('label');
   // assigning attributes for the created label tag 
   label.htmlFor = "id";
-  gameDiv.appendChild(checkbox);
-  gameDiv.appendChild(label);
-  gameDiv.appendChild(document.createTextNode('Check incorrect boxes'));
+  sideDiv.appendChild(checkbox);
+  sideDiv.appendChild(label);
+  label.prepend(document.createTextNode('Check incorrect boxes'));
   checkbox.addEventListener("click", highlightIncorrectBoxes);
 
   function highlightIncorrectBoxes() {
