@@ -90,10 +90,6 @@ async function fetchGameAPI() {
     for (let i = 0; i < gameDataAPI.length; i++) {
       invalid = false;
       for (let j = 0; j < gameDataAPI[i].length; j++) {
-        // if (gameDataAPI[i][j].currentState !== 0 && gameDataAPI[i][j].currentState === gameDataAPI[i][j].correctState) {
-        //   invalid = false;
-        //   alert('You won!!')
-        // }
         if (gameDataAPI[i][j].currentState !== 0 && gameDataAPI[i][j].currentState !== gameDataAPI[i][j].correctState) {
           invalid = true;
           alert('Something is wrong')
@@ -105,7 +101,7 @@ async function fetchGameAPI() {
       }
     };
     if (!invalid) {
-      alert('So far so good')
+      alert('You won!')
     }
   };
 
@@ -135,9 +131,12 @@ async function fetchGameAPI() {
   let label = document.createElement('label');
   // assigning attributes for the created label tag 
   label.htmlFor = "id";
-  sideDiv.appendChild(checkbox);
-  sideDiv.appendChild(label);
+  let sideDiv2 = document.createElement('div');
+  sideDiv2.appendChild(checkbox);
+  sideDiv2.appendChild(label);
   label.prepend(document.createTextNode('Check incorrect boxes'));
+  sideDiv2.classList.add("check-incorect-boxes");
+  sideDiv.appendChild(sideDiv2);
   checkbox.addEventListener("click", highlightIncorrectBoxes);
 
 
@@ -165,7 +164,6 @@ async function fetchGameAPI() {
       checkbox.style.display = "none";
       label.style.display = "none";
     }
-
   }
 
 
@@ -178,12 +176,11 @@ async function fetchGameAPI() {
       invalidCheckLimit = invalidCheckLimit - 1;
       updateCounter();
       getCounterText();
-      console.log("invalidCheckLimit", invalidCheckLimit);
+      // console.log("invalidCheckLimit", invalidCheckLimit);
       for (let i = 0; i < gameDataAPI.length; i++) {
         for (let j = 0; j < gameDataAPI[i].length; j++) {
           if (gameDataAPI[i][j].currentState !== gameDataAPI[i][j].correctState) {
             console.log(gameDataAPI[i][j])
-            // console.log(td.id);
             for (let k = 0; k < td.length; k++) {
               console.log(i, j);
               if (td[k].id === `${i}:${j}`) {
@@ -195,7 +192,6 @@ async function fetchGameAPI() {
       }
     }
     if (checkBox.checked === false) {
-      console.log("unhighlight");
       let td = document.querySelectorAll('td');
       console.log("td", td);
       for (let i = 0; i < td.length; i++) {

@@ -19,11 +19,19 @@ td {
 
 .incorrect {
   border: solid 3px red;
-  pointer-events: none;
+  /* pointer-events: none; */
 }
 
 table .disabled {
-  pointer-events: none;
+  /* pointer-events: none; */
+}
+
+table {
+  margin: 50px;
+}
+
+#theGame {
+  display: flex;
 }
 
 
@@ -59,4 +67,10 @@ body {
 .right-side {
   display: flex;
   flex-direction: column;
+  width: 40%;
+  margin-top: 70px;
+}
+
+.check-incorect-boxes {
+  /* display: flex; */
 }
