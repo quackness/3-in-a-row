@@ -1,3 +1,8 @@
+// import JSConfetti from 'js-confetti';
+// const jsConfetti = new JSConfetti();
+// jsConfetti.addConfetti({
+//   emojis: ['🌈', '⚡️', '💥', '✨', '💫', '🌸'],
+// })
 
 //add header
 let body = document.querySelector('body');
@@ -6,19 +11,13 @@ let headerText = document.createTextNode("🎲 3-In-A-Row 🎲");
 header.append(headerText);
 body.prepend(header);
 
-// div.appendChild(header);
-
-
 async function fetchGameAPI() {
-  let response = await fetch('https://prog2700.onrender.com/threeinarow/sample');
+  let arr = ['sample', '8x8', '10x10', '12x12'];
+  let response = await fetch(`https://prog2700.onrender.com/threeinarow/${arr[0]}`);
   // waits until the request completes...
   let gameDataAPI = await response.json();
   gameDataAPI = gameDataAPI.rows;
   console.log(gameDataAPI);
-
-
-
-
 
   document.querySelector('#theGame').innerHTML = createTable();
 
@@ -27,16 +26,9 @@ async function fetchGameAPI() {
     let rows = "";
     for (let i = 0; i < gameDataAPI.length; i++) {
       rows += "<tr>";
-      // console.log(">>", gameDataAPI[i])
       let tableData = ""
       for (let j = 0; j < gameDataAPI[i].length; j++) {
         tableData += `<td id='${i}:${j}' class='state${gameDataAPI[i][j].currentState}${gameDataAPI[i][j].canToggle ? "" : " unclickable"}'></td>`;
-        if (!gameDataAPI[i][j].canToggle) {
-          //add class which disables pointer events
-          // console.log("unclickable");
-
-        }
-        // console.log("table data", tableData);
       }
       rows += tableData;
       rows += "</tr>";
@@ -68,28 +60,25 @@ async function fetchGameAPI() {
     } else {
       classtoBeChanged.className = "state0"
     }
-    // console.log("after:", gameDataAPI)
-    // checkGame();
-    // }
   }
-  // in target find IdleDeadline, parse it to extract the row and column
 
 
   let td = document.querySelectorAll('td');
   for (let i = 0; i < td.length; i++) {
     td[i].addEventListener("click", changeTileColour);
-    //event.target.id
-    // console.log(event.target.id)
   }
-
-
 
 
   function checkGame(event) {
     let invalid;
+    let winner;
     for (let i = 0; i < gameDataAPI.length; i++) {
+      winner = false;
       invalid = false;
       for (let j = 0; j < gameDataAPI[i].length; j++) {
+        if (gameDataAPI[i][j].currentState !== 0 && gameDataAPI[i][j].currentState === gameDataAPI[i][j].correctState) {
+          winner = true;
+        }
         if (gameDataAPI[i][j].currentState !== 0 && gameDataAPI[i][j].currentState !== gameDataAPI[i][j].correctState) {
           invalid = true;
           alert('Something is wrong')
@@ -100,8 +89,13 @@ async function fetchGameAPI() {
         break;
       }
     };
-    if (!invalid) {
-      alert('You won!')
+    if (winner && !invalid) {
+      alert('You won!');
+    };
+    if (!winner && !invalid) {
+      // window.confetti();
+      alert('So far so good!')
+      // jsConfetti.addConfetti();
     }
   };
 
@@ -140,8 +134,6 @@ async function fetchGameAPI() {
   checkbox.addEventListener("click", highlightIncorrectBoxes);
 
 
-  // let invalidCheckLimit = 5;
-
   //innovatove features
   let accessRightSide = document.querySelector(".right-side");
   let counter = document.createElement("div")
@@ -165,7 +157,6 @@ async function fetchGameAPI() {
       label.style.display = "none";
     }
   }
-
 
   console.log("val", counterText.nodeValue)
 
@@ -201,6 +192,29 @@ async function fetchGameAPI() {
   };
 
 
+  // // add new buttons
+  // let gridChoice = document.createElement('button');
+  // let gridText = document.createTextNode("8x8");
+  // gridChoice.appendChild(gridText);
+  // //add click event
+  // gridChoice.addEventListener("click", () => {
+  //   console.log("8x8");
+  //   chooseGrid();
+  // });
+  // gameDiv.appendChild(gridChoice);
+
+  // gridChoice = document.createElement('button');
+  // gridText = document.createTextNode("10x10");
+  // gridChoice.appendChild(gridText);
+  // //add click event
+  // gridChoice.addEventListener("click", () => {
+  //   console.log("10x10");
+  //   chooseGrid();
+  // });
+  // gameDiv.appendChild(gridChoice);
+
+
+
 
 
 
@@ -208,4 +222,7 @@ async function fetchGameAPI() {
 
 
 }
+
+
+
 fetchGameAPI();
