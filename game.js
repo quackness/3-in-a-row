@@ -140,11 +140,45 @@ async function fetchGameAPI() {
   label.prepend(document.createTextNode('Check incorrect boxes'));
   checkbox.addEventListener("click", highlightIncorrectBoxes);
 
+
+  // let invalidCheckLimit = 5;
+
+  //innovatove features
+  let accessRightSide = document.querySelector(".right-side");
+  let counter = document.createElement("div")
+  counter.classList.add("counter")
+  let counterIntro = document.createElement("p");
+  let invalidCheckLimit = 5;
+  let counterText = document.createTextNode(getCounterText());
+
+  function getCounterText() {
+    return `You can check for invalid boxes only 5 times. Remaining checks left: ${invalidCheckLimit}`;
+  };
+
+  counterIntro.appendChild(counterText);
+  accessRightSide.appendChild(counter);
+  counter.appendChild(counterIntro);
+
+  function updateCounter() {
+    counterText.nodeValue = getCounterText();
+    if (invalidCheckLimit === 0) {
+      checkbox.style.display = "none";
+      label.style.display = "none";
+    }
+
+  }
+
+
+  console.log("val", counterText.nodeValue)
+
   function highlightIncorrectBoxes() {
     let checkBox = document.getElementById("status");
     let td = document.querySelectorAll('td');
     if (checkBox.checked === true) {
-      let incorrect = [];
+      invalidCheckLimit = invalidCheckLimit - 1;
+      updateCounter();
+      getCounterText();
+      console.log("invalidCheckLimit", invalidCheckLimit);
       for (let i = 0; i < gameDataAPI.length; i++) {
         for (let j = 0; j < gameDataAPI[i].length; j++) {
           if (gameDataAPI[i][j].currentState !== gameDataAPI[i][j].correctState) {
@@ -169,6 +203,13 @@ async function fetchGameAPI() {
       }
     }
   };
+
+
+
+
+
+
+
 
 }
 fetchGameAPI();
