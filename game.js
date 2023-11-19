@@ -1,9 +1,3 @@
-// import JSConfetti from 'js-confetti';
-// const jsConfetti = new JSConfetti();
-// jsConfetti.addConfetti({
-//   emojis: ['🌈', '⚡️', '💥', '✨', '💫', '🌸'],
-// })
-
 //add header
 let body = document.querySelector('body');
 let header = document.createElement("h1");
@@ -11,12 +5,19 @@ let headerText = document.createTextNode("🎲 3-In-A-Row 🎲");
 header.append(headerText);
 body.prepend(header);
 
-async function fetchGameAPI() {
-  let arr = ['sample', '8x8', '10x10', '12x12'];
-  let response = await fetch(`https://prog2700.onrender.com/threeinarow/${arr[0]}`);
+let gameDiv = document.getElementById("theGame");
+
+let arr = ['sample', '8x8', '10x10', '12x12'];
+
+// async function fetchGameAPI(gridChoice) {
+async function fetchGameAPI(gridChoice = "sample") {
+  let response = await fetch("https://prog2700.onrender.com/threeinarow/" + gridChoice);
   // waits until the request completes...
   let gameDataAPI = await response.json();
+
+
   gameDataAPI = gameDataAPI.rows;
+  let totalSquares = gameDataAPI.length * gameDataAPI.length;
   console.log(gameDataAPI);
 
   document.querySelector('#theGame').innerHTML = createTable();
@@ -43,6 +44,7 @@ async function fetchGameAPI() {
     console.log("event", event);
     console.log("event", event.target.id);
     let [i, j] = event.target.id.split(":");
+
     // console.log("arr", arr);
     // let clickable = gameDataAPI[parseInt(i)][parseInt(j)].canToggle;
     let classtoBeChanged = document.getElementById(event.target.id)
@@ -72,35 +74,44 @@ async function fetchGameAPI() {
   function checkGame(event) {
     let invalid;
     let winner;
+    let counted = 0;
     for (let i = 0; i < gameDataAPI.length; i++) {
       winner = false;
       invalid = false;
       for (let j = 0; j < gameDataAPI[i].length; j++) {
+        console.log("i", i, "j", j);
+        console.log("curr", gameDataAPI[i][j].currentState, "corecttt", gameDataAPI[i][j].correctState);
         if (gameDataAPI[i][j].currentState !== 0 && gameDataAPI[i][j].currentState === gameDataAPI[i][j].correctState) {
+          counted++;
           winner = true;
         }
         if (gameDataAPI[i][j].currentState !== 0 && gameDataAPI[i][j].currentState !== gameDataAPI[i][j].correctState) {
           invalid = true;
-          alert('Something is wrong')
+          // winner = false;
+          counted++;
+
           break;
         }
       }
       if (invalid) {
+        winner = false;
+        alert('Something is wrong');
         break;
       }
     };
-    if (winner && !invalid) {
+    // && winner && !invalid
+    if (counted == totalSquares && winner) {
       alert('You won!');
-    };
-    if (!winner && !invalid) {
-      // window.confetti();
+    } else if ((!winner && !invalid)) {
       alert('So far so good!')
-      // jsConfetti.addConfetti();
     }
+    // if (!winner && !invalid) {
+
+    // }
   };
 
   //Button creating, attaching it to the dom and filling it up with text
-  let gameDiv = document.getElementById("theGame");
+  // let gameDiv = document.getElementById("theGame");
   let sideDiv = document.createElement('div');
   sideDiv.classList.add("right-side");
   // creating button
@@ -191,38 +202,52 @@ async function fetchGameAPI() {
     }
   };
 
-
-  // // add new buttons
-  // let gridChoice = document.createElement('button');
-  // let gridText = document.createTextNode("8x8");
-  // gridChoice.appendChild(gridText);
-  // //add click event
-  // gridChoice.addEventListener("click", () => {
-  //   console.log("8x8");
-  //   chooseGrid();
-  // });
-  // gameDiv.appendChild(gridChoice);
-
-  // gridChoice = document.createElement('button');
-  // gridText = document.createTextNode("10x10");
-  // gridChoice.appendChild(gridText);
-  // //add click event
-  // gridChoice.addEventListener("click", () => {
-  //   console.log("10x10");
-  //   chooseGrid();
-  // });
-  // gameDiv.appendChild(gridChoice);
-
-
-
-
-
-
-
-
-
 }
 
-
-
 fetchGameAPI();
+
+let eightByeightBtn = document.createElement('button');
+console.log(eightByeightBtn);
+let eightByeight = document.createTextNode("8x8");
+eightByeightBtn.appendChild(eightByeight);
+//add click event
+eightByeightBtn.addEventListener("click", () => {
+  console.log("8x8");
+  fetchGameAPI("8x8");
+});
+body.append(eightByeightBtn);
+
+let tenByTenBtn = document.createElement('button');
+let tenByTen = document.createTextNode("10x10");
+tenByTenBtn.appendChild(tenByTen);
+body.append(tenByTenBtn);
+//add click event
+tenByTenBtn.addEventListener("click", () => {
+  console.log("clik")
+  fetchGameAPI("10x10");
+});
+
+let twelveByTwelveBtn = document.createElement('button');
+let twelveByTwelve = document.createTextNode("12x12");
+twelveByTwelveBtn.appendChild(twelveByTwelve);
+body.append(twelveByTwelveBtn);
+//add click event
+twelveByTwelveBtn.addEventListener("click", () => {
+  fetchGameAPI("12x12");
+});
+
+// body.append(tenByTenBtn);
+
+
+
+// add new buttons
+// let grab = document.querySelectorAll("body");
+// let gridChoice = document.createElement('button');
+// let gridText = document.createTextNode("8x8");
+// gridChoice.appendChild(gridText);
+// //add click event
+// gridChoice.addEventListener("click", () => {
+//   console.log("8x8");
+//   fetchGameAPI("8x8");
+// });
+// gameDiv.appendChild(gridChoice);
