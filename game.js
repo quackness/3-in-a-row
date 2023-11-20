@@ -5,16 +5,16 @@ let headerText = document.createTextNode("🎲 3-In-A-Row 🎲");
 header.append(headerText);
 body.prepend(header);
 
-let gameDiv = document.getElementById("theGame");
 
-let arr = ['sample', '8x8', '10x10', '12x12'];
 
 // async function fetchGameAPI(gridChoice) {
 async function fetchGameAPI(gridChoice = "sample") {
   let response = await fetch("https://prog2700.onrender.com/threeinarow/" + gridChoice);
+  // let response = await fetch("https://prog2700.onrender.com/threeinarow/random/");
   // waits until the request completes...
   let gameDataAPI = await response.json();
 
+  let gameDiv = document.getElementById("theGame");
 
   gameDataAPI = gameDataAPI.rows;
   let totalSquares = gameDataAPI.length * gameDataAPI.length;
@@ -80,7 +80,7 @@ async function fetchGameAPI(gridChoice = "sample") {
       invalid = false;
       for (let j = 0; j < gameDataAPI[i].length; j++) {
         console.log("i", i, "j", j);
-        console.log("curr", gameDataAPI[i][j].currentState, "corecttt", gameDataAPI[i][j].correctState);
+        console.log("current", gameDataAPI[i][j].currentState, "correct", gameDataAPI[i][j].correctState);
         if (gameDataAPI[i][j].currentState !== 0 && gameDataAPI[i][j].currentState === gameDataAPI[i][j].correctState) {
           counted++;
           winner = true;
@@ -89,7 +89,6 @@ async function fetchGameAPI(gridChoice = "sample") {
           invalid = true;
           // winner = false;
           counted++;
-
           break;
         }
       }
@@ -98,9 +97,14 @@ async function fetchGameAPI(gridChoice = "sample") {
         alert('Something is wrong');
         break;
       }
+      if (winner && counted !== totalSquares) {
+        winner = false;
+      }
     };
     // && winner && !invalid
-    if (counted == totalSquares && winner) {
+
+    console.log("winner", winner, "invalid", invalid, "counted", counted);
+    if (counted === totalSquares && winner) {
       alert('You won!');
     } else if ((!winner && !invalid)) {
       alert('So far so good!')
@@ -145,7 +149,7 @@ async function fetchGameAPI(gridChoice = "sample") {
   checkbox.addEventListener("click", highlightIncorrectBoxes);
 
 
-  //innovatove features
+  //innovative features
   let accessRightSide = document.querySelector(".right-side");
   let counter = document.createElement("div")
   counter.classList.add("counter")
@@ -251,3 +255,8 @@ twelveByTwelveBtn.addEventListener("click", () => {
 //   fetchGameAPI("8x8");
 // });
 // gameDiv.appendChild(gridChoice);
+
+
+// https://www.geeksforgeeks.org/how-to-add-a-class-to-dom-element-in-javascript/
+// https://stackoverflow.com/questions/50863848/how-to-update-an-html-input-field-using-the-dom
+// https://www.geeksforgeeks.org/html-dom-input-checkbox-object/
