@@ -244,7 +244,7 @@ twelveByTwelveBtn.addEventListener("click", () => {
 
 
 
-// add new buttons
+// add new buttons//
 // let grab = document.querySelectorAll("body");
 // let gridChoice = document.createElement('button');
 // let gridText = document.createTextNode("8x8");
